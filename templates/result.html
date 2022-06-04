@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{%block title%}
+Mails To Many: Edit Contacts Page
+{% endblock %}
+
+{% block main %}
+<div class="container-span">
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="sub-head">We made it Short here</p>
+            <div class="main-form">
+                <label class="field field_v1" for="recipient_name">
+                    <input class="field__input" type="text" name="recipient_name" id="recipient_name" value="url"
+                        style="max-width:95%;">
+                    <span class="field__label-wrap">
+                        <span class="field__label sub-heading-form">Recipient Name</span>
+                    </span>
+                </label><br>
+
+                <label class="field field_v1" for="recipient_mail">
+                    <input class="long_url_output" placeholder="example@gmail.com" type="email" name="recipient_mail"
+                        id="recipient_mail" required>
+                    <span class="field__label-wrap">
+                        <span class="field__label sub-heading-form">Recipient Email</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
