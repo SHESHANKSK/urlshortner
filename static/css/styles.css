@@ -62,7 +62,7 @@ background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
 }
 
 .long_url_output{
-    /* padding: 15px 10px; */
+    padding: 15px 10px;
     border-color: #f5df2e;
     width: 95%;
     border-radius: 12px;

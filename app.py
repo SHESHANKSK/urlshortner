@@ -1,3 +1,4 @@
+from enum import unique
 from flask import Flask, render_template, redirect, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_minify import minify, decorators
@@ -32,28 +33,6 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/api')
-@decorators.minify(html=True, js=True, cssless=True)
-def api():
-    return render_template('index.html')
-
-
-@app.route('/result')
-@decorators.minify(html=True, js=True, cssless=True)
-def result():
-    short_url_id = "http://127.0.0.1:5000/"
-    delete_url_id = "http://127.0.0.1:5000/"
-    return render_template('result.html', short_url=short_url_id, delete_url=delete_url_id)
-
-
-@app.route('/result')
-@decorators.minify(html=True, js=True, cssless=True)
-def short_url():
-    short_url_id = "http://127.0.0.1:5000/"
-    delete_url_id = "http://127.0.0.1:5000/"
-    return render_template('result.html', short_url=short_url_id, delete_url=delete_url_id)
-
-
 @app.route('/shorturl', methods=['POST'])
 def shorturl():
     long_url = request.form.get('long_url')
@@ -63,15 +42,32 @@ def shorturl():
     db.session.add(url_record)
     db.session.commit()
     short_url_id = "http://127.0.0.1:5000/" + short_url_id
-    delete_url_id = "http://127.0.0.1:5000/" + delete_url_id
+    delete_url_id = "http://127.0.0.1:5000/delete/" + delete_url_id
     return render_template('result.html', short_url=short_url_id, delete_url=delete_url_id)
 
 
-# @app.route('/delete/<int:id>', methods=['GET'])
-# def deleteuser(id):
-#     recipient = Recipient.query.filter_by(id=id).first()
-#     db.session.delete(recipient)
-#     db.session.commit()
-#     return redirect("/contacts")
+@app.route('/<string:short_url_key>')
+@decorators.minify(html=True, js=True, cssless=True)
+def short_minify(short_url_key):
+    shortner = UrlShortner.query.filter_by(short_url_id=short_url_key).first()
+    redirect_link = str(shortner.long_url)
+    return redirect(redirect_link)
+
+
+@app.route('/delete/<string:delete_url_key>', methods=['GET'])
+def deleteuser(delete_url_key):
+    shortner = UrlShortner.query.filter_by(
+        delete_url_id=delete_url_key).first()
+    db.session.delete(shortner)
+    db.session.commit()
+    return redirect("/")
+
+
+@app.route('/api')
+@decorators.minify(html=True, js=True, cssless=True)
+def api():
+    return render_template('index.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

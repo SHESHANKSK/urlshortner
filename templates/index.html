@@ -1,26 +1,20 @@
-{% extends 'base.html' %}
-
-{%block title%}
-URL Shortner: Simplify your URL's
-{% endblock %}
-
-{% block main %}
-
+{% extends 'base.html' %} {%block title%} URL Shortner: Simplify your URL's {%
+endblock %} {% block main %}
 
 <div class="container-span">
     <div class="row">
         <div class="col-md-12">
             <p class="sub-head">URL Shortner</p>
             <form action="/shorturl" method="post" class="main-form">
-                <label for="long_url" class="sub-heading-form">Enter Your Long Link Here</label><br>
-                <textarea id="long_url" name="long_url" rows="5" required></textarea><br>
+                <label for="long_url" class="sub-heading-form">Enter Your Long Link Here</label><br />
+                <textarea id="long_url" name="long_url" rows="5" required></textarea><br />
 
-                <div style="text-align: center;">
-                    <input type="submit" value="Get Shortned Link" class="mtmsubbtn">
+                <div style="text-align: center">
+                    <input type="submit" value="Get Shortned Link" class="mtmsubbtn" />
                 </div>
             </form>
-
-
         </div>
 
         {% endblock %}
+    </div>
+</div>
