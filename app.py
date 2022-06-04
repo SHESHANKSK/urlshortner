@@ -90,4 +90,4 @@ def short_url_api(long_url_key):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
