@@ -46,8 +46,8 @@ def shorturl():
                              short_url_id=short_url_id, delete_url_id=delete_url_id)
     db.session.add(url_record)
     db.session.commit()
-    short_url_id = "http://127.0.0.1:5000/" + short_url_id
-    delete_url_id = "http://127.0.0.1:5000/delete/" + delete_url_id
+    short_url_id = "https://biturll.herokuapp.com/" + short_url_id
+    delete_url_id = "https://biturll.herokuapp.com/delete/" + delete_url_id
     return render_template('result.html', short_url=short_url_id, delete_url=delete_url_id)
 
 
@@ -76,8 +76,8 @@ def short_url_api(long_url_key):
                              short_url_id=short_url_id, delete_url_id=delete_url_id)
     db.session.add(url_record)
     db.session.commit()
-    short_url_id = "http://127.0.0.1:5000/" + short_url_id
-    delete_url_id = "http://127.0.0.1:5000/delete/" + delete_url_id
+    short_url_id = "https://biturll.herokuapp.com/" + short_url_id
+    delete_url_id = "https://biturll.herokuapp.com/delete/" + delete_url_id
     json_format = {
         "response": {
             "long_url": long_url,
