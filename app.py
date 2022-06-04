@@ -1,5 +1,4 @@
-from enum import unique
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_minify import minify, decorators
 import uuid
@@ -33,6 +32,12 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/api')
+@decorators.minify(html=True, js=True, cssless=True)
+def api():
+    return render_template('api.html')
+
+
 @app.route('/shorturl', methods=['POST'])
 def shorturl():
     long_url = request.form.get('long_url')
@@ -63,10 +68,25 @@ def deleteuser(delete_url_key):
     return redirect("/")
 
 
-@app.route('/api')
-@decorators.minify(html=True, js=True, cssless=True)
-def api():
-    return render_template('index.html')
+@app.route('/api/<path:long_url_key>')
+def short_url_api(long_url_key):
+    long_url = long_url_key
+    short_url_id, delete_url_id = generate_uuid_short_del()
+    url_record = UrlShortner(long_url=long_url,
+                             short_url_id=short_url_id, delete_url_id=delete_url_id)
+    db.session.add(url_record)
+    db.session.commit()
+    short_url_id = "http://127.0.0.1:5000/" + short_url_id
+    delete_url_id = "http://127.0.0.1:5000/delete/" + delete_url_id
+    json_format = {
+        "response": {
+            "long_url": long_url,
+            "short_url_id": short_url_id,
+            "delete_url_id": delete_url_id
+        }
+    }
+
+    return jsonify(json_format)
 
 
 if __name__ == '__main__':
